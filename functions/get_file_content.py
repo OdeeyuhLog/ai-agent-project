@@ -1,5 +1,7 @@
 from os import path
 
+from google.genai import types
+
 from config import MAX_CHARS
 
 
@@ -21,8 +23,27 @@ def get_file_content(working_directory, file_path):
             file_contents += (
                 f'[...File "{file_path}" truncated at {MAX_CHARS} characters]'
             )
-        
+
         return file_contents
 
     except Exception as e:
         return f"Error: {str(e)}"
+
+
+schema_get_file_content = types.FunctionDeclaration(
+    name="get_file_content",
+    description="Output all the contents inside a given file combined with the given absolute path",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description="Name of the file that will be outputted by the function",
+            ),
+            "directory": types.Schema(
+                type=types.Type.STRING,
+                description="Directory path to list files from, relative to the working directory (default is the working directory itself)",
+            ),
+        },
+    ),
+)
