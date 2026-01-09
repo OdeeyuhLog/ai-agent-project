@@ -1,5 +1,7 @@
 import os
 
+from google.genai import types
+
 
 def write_file(working_directory, file_path, content):
     try:
@@ -11,7 +13,7 @@ def write_file(working_directory, file_path, content):
 
         if os.path.isdir(target_file):
             f'Error: Cannot write to "{file_path}" as it is a directory '
-        
+
         os.makedirs(os.path.dirname(target_file), exist_ok=True)
 
         with open(target_file, "w") as f:
@@ -23,3 +25,26 @@ def write_file(working_directory, file_path, content):
 
     except Exception as e:
         return f"Error: {str(e)}"
+
+
+schema_write_file = types.FunctionDeclaration(
+    name="write_file",
+    description="Creates a file and writes the provided content inside it, if the same file name already exists, it overwrites it instead with the new content",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "directory": types.Schema(
+                type=types.Type.STRING,
+                description="File directory where the supposed file should be found, default should be the current directory",
+            ),
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description="Name of the file to create or overwrite if existing already.",
+            ),
+            "content": types.Schema(
+                type=types.Type.STRING,
+                description="This is the string content to write inside the pointed file",
+            ),
+        },
+    ),
+)
