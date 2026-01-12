@@ -67,6 +67,5 @@ schema_run_python_file = types.FunctionDeclaration(
                 ),
             ),
         },
-        required=["directory", "file_path"],
     ),
 )
