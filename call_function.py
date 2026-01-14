@@ -14,7 +14,6 @@ available_functions = types.Tool(
     ]
 )
 
-
 def call_function(function_call: types.FunctionCall, verbose=False):
     if verbose:
         print(f"Calling function: {function_call.name}({function_call.args})")
@@ -28,7 +27,6 @@ def call_function(function_call: types.FunctionCall, verbose=False):
         "write_file": write_file,
     }
     function_name = function_call.name or ""
-    function
 
     if function_name not in function_map:
         return types.Content(
@@ -42,6 +40,7 @@ def call_function(function_call: types.FunctionCall, verbose=False):
         )
 
     args = dict(function_call.args) if function_call.args else {}
+
     args["working_directory"] = "./calculator"
 
     # Function Calling
