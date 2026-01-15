@@ -69,21 +69,17 @@ def generate_content(client, messages, verbose):
     for function_call in response.function_calls:
         function_call_result = call_function(function_call, verbose)
 
-        if not function_call_result.parts:
-            raise Exception("function parts do not exist")
-
-        if function_call_result.parts[0].function_response is None:
-            raise Exception("there is no response")
-
-        if function_call_result.parts[0].function_response.response is None:
-            raise Exception("Response property does not exist")
-
-        function_results_list.append(
-            function_call_result.parts[0].function_response.response
-        )
+        if (
+            not function_call_result.parts
+            or not function_call_result.parts[0].function_response
+            or not function_call_result.parts[0].function_response.response
+        ):
+            raise RuntimeError(f"Empty function response for {function_call.name}")
 
         if verbose:
             print(f"-> {function_call_result.parts[0].function_response.response}")
+
+        function_results_list.extend(function_call_result.parts)
 
     messages.append(types.Content(role="user", parts=function_results_list))
 

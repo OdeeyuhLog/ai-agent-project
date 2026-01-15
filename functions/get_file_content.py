@@ -27,7 +27,8 @@ def get_file_content(working_directory, file_path):
         return file_contents
 
     except Exception as e:
-        return f"Error: {str(e)}"
+        return {"error": str(e)}
+
 
 
 schema_get_file_content = types.FunctionDeclaration(

@@ -45,6 +45,10 @@ def call_function(function_call: types.FunctionCall, verbose=False):
 
     # Function Calling
     function_result = function_map[function_name](**args)
+    
+    if verbose:
+        print("RAW FUNCTION RESULT TYPE", type(function_result))
+        print("RAW FUNCTION RESULT", function_result)
 
     return types.Content(
         role="tool",

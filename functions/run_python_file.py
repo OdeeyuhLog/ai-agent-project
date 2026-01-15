@@ -41,7 +41,7 @@ def run_python_file(working_directory, file_path, args=None):
         return output
 
     except Exception as e:
-        return f"error: executing python file: {e}"
+        return {"error": str(e)}
 
 
 schema_run_python_file = types.FunctionDeclaration(

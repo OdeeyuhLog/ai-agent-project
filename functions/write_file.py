@@ -24,7 +24,7 @@ def write_file(working_directory, file_path, content):
         )
 
     except Exception as e:
-        return f"Error: {str(e)}"
+        return {"error": str(e)}
 
 
 schema_write_file = types.FunctionDeclaration(

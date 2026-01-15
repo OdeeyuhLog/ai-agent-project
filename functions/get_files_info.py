@@ -29,7 +29,7 @@ def get_files_info(working_directory, directory="."):
         return "\n".join(file_tree_str_list)
 
     except Exception as e:
-        return f"Error: {str(e)}"
+        return {"error": str(e)}
 
 
 schema_get_files_info = types.FunctionDeclaration(
